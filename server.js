@@ -7,8 +7,13 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 
 app.use(cors());
+
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
+});
+
+app.get("/api", (req, res) => {
+  res.json({ message: "Hello from server!" });
 });
 
 io.on("connection", (socket) => {
