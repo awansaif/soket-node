@@ -2,9 +2,13 @@ const express = require("express");
 const app = express();
 const http = require("http");
 var cors = require("cors");
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server);
+const httpServer = http.createServer(app);
+
+const io = require("socket.io")(httpServer, {
+  cors: {
+    origin: "*",
+  },
+});
 
 app.use(
   cors({
@@ -21,6 +25,6 @@ io.on("connection", (socket) => {
   console.log("a user connected");
 });
 
-server.listen(port, () => {
+httpServer.listen(port, () => {
   console.log(`listening on *: ${port}`);
 });
